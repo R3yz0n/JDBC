@@ -87,15 +87,14 @@ public class DatabaseOperation {
 
 			Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery(readData);
-			
-		
+
 			System.out.println("First Name\tLast Name\tDOB\t \t\tPhone Number\tAge\tCollege Name\tLocation\tEmail");
 
 			while (resultSet.next()) {
-				System.out.println(resultSet.getObject("first_name") + "\t\t" + resultSet.getObject("last_name") + "\t\t"
-						+ resultSet.getObject("dob") + "\t"  + "\t"
-						+ resultSet.getObject("phone_number") + "\t" + resultSet.getObject("age") + "\t"
-						+ resultSet.getObject("college_name") + "\t" + resultSet.getObject("location")+"\t"+resultSet.getObject("email"));
+				System.out.println(resultSet.getObject("first_name") + "\t\t" + resultSet.getObject("last_name")
+						+ "\t\t" + resultSet.getObject("dob") + "\t" + "\t" + resultSet.getObject("phone_number") + "\t"
+						+ resultSet.getObject("age") + "\t" + resultSet.getObject("college_name") + "\t"
+						+ resultSet.getObject("location") + "\t" + resultSet.getObject("email"));
 			}
 
 		} catch (Exception e) {
