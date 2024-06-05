@@ -3,11 +3,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatabaseOperation {
+public class QueringAndMutation {
+
+	// When we use execute() method it returns true in case of Querying eg SELECT
+	// statement
 
 	private static Statement statement;
 
-	public DatabaseOperation() {
+	public QueringAndMutation() {
+
+		// Driver is not need for jdbc above 4
 
 		String url = "jdbc:postgresql://localhost:5432/JDBC";
 
@@ -15,8 +20,23 @@ public class DatabaseOperation {
 		String password = "sagar123";
 
 		try {
+
+			// Connection is an interface defined in JRE so we cannot create a class out of
+			// it
+
+			// DriverManager is an class that returns the Connection interface that
+			// implements the
+			// RDBMS provider
+
+//			When you obtain a database connection using DriverManager.getConnection(url, user, password),
+//			This object represents the actual database connection and provides the functionality specified by the methods in the Connection interface.
+
+			// Shortcut ma vannu parda conn is of type Connection interface which hold the
+			// refrence to the class defined in the JDBC driver eg postgres
+
 			Class.forName("org.postgresql.Driver");
 			java.sql.Connection conn = DriverManager.getConnection(url, user, password);
+
 			statement = conn.createStatement();
 			System.out.println("Connected to the PostgreSQL server successfully.\n\n");
 
@@ -28,28 +48,30 @@ public class DatabaseOperation {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		DatabaseOperation db = new DatabaseOperation();
+		QueringAndMutation db = new QueringAndMutation();
+		/* */ System.out.println(db);
 
-//		createTables();
+		createTables();
 //		insertData();
 //		readData();
+//		UpdateRecord();
 //		DeleteStudentData();
 //		DeleteTables();
-//		UpdateRecord();
 //		readData();
-
+//		System.out.println(statement.getUpdateCount());
+		statement.close();
 	}
 
 	public static void createTables() {
 
 		try {
+//Execute returns true when it's SELECT statement and further ResultSet and loop throught it otherwise false and then we can use
+// getUpdateCount() to check no of rows affected
+			boolean resultset1 = statement.execute(createCollegeTable);
 
-			int resultset1 = statement.executeUpdate(createCollegeTable);
-			System.out.println(resultset1);
-
-			int resultset2 = statement.executeUpdate(createStudentsTable);
+			boolean resultset2 = statement.execute(createStudentsTable);
 
 			System.out.println(resultset1);
 			System.out.println(resultset2);
@@ -79,6 +101,7 @@ public class DatabaseOperation {
 	}
 
 	public static void readData() {
+
 		// Note for natural join if college_id in student table must not be id id in
 
 		try {
@@ -118,8 +141,9 @@ public class DatabaseOperation {
 	public static void UpdateRecord() {
 
 		try {
-			int resultset = statement.executeUpdate(updateData);
+			boolean resultset = statement.execute(updateData); // returns false for mutation
 			System.out.println(resultset);
+			System.out.println(statement.getUpdateCount());
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -135,8 +159,11 @@ public class DatabaseOperation {
 		String deleteCollegeTable = "DROP table  colleges";
 
 		try {
-			int resultset1 = statement.executeUpdate(deleteStudentsTable);
-			int resultset2 = statement.executeUpdate(deleteCollegeTable);
+			boolean resultset1 = statement.execute(deleteStudentsTable);
+			boolean resultset2 = statement.execute(deleteCollegeTable);
+			System.out.println();
+			System.out.println(statement.getResultSet());
+
 			System.out.println(resultset1);
 			System.out.println(resultset2);
 
@@ -149,6 +176,13 @@ public class DatabaseOperation {
 	}
 
 	// Queries
+
+	public static void MultipleQueries() {
+
+		String query1 = "Select * from student where id='1' ";
+//		private String query2="Select * from student where id='1' ";
+
+	}
 
 	private final static String createCollegeTable = "CREATE TABLE IF NOT EXISTS colleges ("
 			+ "college_id SERIAL NOT NULL PRIMARY KEY," + "college_name VARCHAR(100) NOT NULL, "
