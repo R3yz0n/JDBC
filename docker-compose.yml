@@ -1,15 +1,59 @@
+# version: '3.8'
+# services:
+#   db:
+#     image: postgres
+#     restart: always
+#     environment:
+#       POSTGRES_DB: JDBC
+#       POSTGRES_USER: sagar
+#       POSTGRES_PASSWORD: sagar123
+#     volumes:
+#       - db_data:/var/lib/postgresql/data
+#     ports:
+#       - "5432:5432"
+# volumes:
+#   db_data:
+
+
+# if container name is not specified then its by default the name of the services
+
 version: '3.8'
+
 services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "8080:80"
+      # the 8080 is accessed by local machine  and 80 is the port of the docker container
+    networks:
+      - pg_network
+
   db:
     image: postgres
+    container_name: postgres_container
     restart: always
     environment:
-      POSTGRES_DB: JDBC
-      POSTGRES_USER: sagar
-      POSTGRES_PASSWORD: sagar123
+      - POSTGRES_DB=JDBC
+      - POSTGRES_USER=sagar
+      - POSTGRES_PASSWORD=sagar123
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - pg_network
+
+networks:
+  pg_network:
+    driver: bridge
+
 volumes:
   db_data:
+  pgadmin_data:

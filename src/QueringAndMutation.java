@@ -21,7 +21,7 @@ public class QueringAndMutation {
 
 		try {
 
-			// Connection is an interface defined in JRE so we cannot create a class out of
+			// Connection is an interface defined in JRE so we cannot create a object out of
 			// it
 
 			// DriverManager is an class that returns the Connection interface that
@@ -54,8 +54,8 @@ public class QueringAndMutation {
 		/* */ System.out.println(db);
 
 		createTables();
-//		insertData();
-//		readData();
+		insertData();
+		readData();
 //		UpdateRecord();
 //		DeleteStudentData();
 //		DeleteTables();
@@ -67,14 +67,17 @@ public class QueringAndMutation {
 	public static void createTables() {
 
 		try {
-//Execute returns true when it's SELECT statement and further ResultSet and loop throught it otherwise false and then we can use
+//Execute returns true when it's SELECT statement and further ResultSet and loop through it otherwise false and then we can use
 // getUpdateCount() to check no of rows affected
-			boolean resultset1 = statement.execute(createCollegeTable);
+			boolean isCreatedCollege= statement.execute(createCollegeTable);
 
-			boolean resultset2 = statement.execute(createStudentsTable);
+			boolean isCreatedStudents = statement.execute(createStudentsTable);
+//If getUpdateCount() shows 0 then it is DDL statement as per my guess
+		
+			System.out.println(statement.getUpdateCount()==0?"DDL statement":"DML mutation statements");
+			System.out.println(!isCreatedCollege?"yes students is created":"no");
+			System.out.println(!isCreatedStudents?"yes colleges is created":"no");
 
-			System.out.println(resultset1);
-			System.out.println(resultset2);
 
 		} catch (SQLException e) {
 
