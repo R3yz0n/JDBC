@@ -1,10 +1,12 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.Scanner;
 
-public class InsensitiveResultSet {
+public class Updatable {
 
 	// Scrollable result set
+
 	private static Connection conn;
 
 	public static void main(String[] args) {
@@ -34,25 +36,25 @@ public class InsensitiveResultSet {
 		try {
 
 			java.sql.Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY); // It is default
+					ResultSet.CONCUR_UPDATABLE);
 
+			// updating first row
 			ResultSet resultSet = statement.executeQuery(query);
-			//Here after result has been created, the scrollable type being insensitive,
-			// the changes in db throught another transation wont be reflected
-			Thread.sleep(5000);
+			resultSet.next();
 
-//			System.out.println(resultSet.next());
-//			System.out.println(resultSet.getString("first_name"));
-//			System.out.println(resultSet.next());
-//			System.out.println(resultSet.previous());
+			resultSet.updateString("first_name", "heyboi");
+			resultSet.updateRow();
+//			resultSet.refreshRow(); //I gotta ask question
+//			Thread.sleep(1000);
+			System.out.println(resultSet.getObject("first_name"));
+			System.out.println("sucessfull updated the first row with first_name heyboi");
 
-			System.out.println(resultSet.absolute(10));
-			System.out.println(resultSet.getArray(2));
-
-			while (resultSet.next()) {
-				System.out.println(resultSet.getObject("first_name"));
-
-			}
+//			while (resultSet.next()) {
+//				resultSet.updateString("first_name", "lamo");
+//				resultSet.updateRow();
+//				System.out.println(resultSet.getObject("first_name"));
+//
+//			}
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
