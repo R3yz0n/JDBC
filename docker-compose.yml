@@ -30,7 +30,7 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
     ports:
-      - "8080:80"
+      - "8000:80"
       # the 8080 is accessed by local machine  and 80 is the port of the docker container
     networks:
       - pg_network
