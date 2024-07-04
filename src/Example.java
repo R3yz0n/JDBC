@@ -3,6 +3,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javax.sql.rowset.CachedRowSet;
+
 public class Example {
 	public static void main(String[] args) {
 		String url = "jdbc:postgresql://localhost:5432/JDBC";
@@ -23,6 +25,7 @@ public class Example {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+			CachedRowSet
 
 		}
 	}
