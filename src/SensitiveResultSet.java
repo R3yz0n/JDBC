@@ -40,13 +40,10 @@ public class SensitiveResultSet {
 			ResultSet resultSet;
 
 			resultSet = statement.executeQuery(query);
-			
-			//Here after result has been created, the scrollable type being sensitive,
+
+			// Here after result has been created, the scrollable type being sensitive,
 			// the changes in database through another transaction will be reflected
 			Thread.sleep(7000);
-			
-            Thread.sleep(8000); 
-
 
 			while (resultSet.next()) {
 				System.out.println(resultSet.getObject("first_name"));
