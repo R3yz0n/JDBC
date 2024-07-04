@@ -69,15 +69,14 @@ public class QueringAndMutation {
 		try {
 //Execute returns true when it's SELECT statement and further ResultSet and loop through it otherwise false and then we can use
 // getUpdateCount() to check no of rows affected
-			boolean isCreatedCollege= statement.execute(createCollegeTable);
+			boolean isCreatedCollege = statement.execute(createCollegeTable);
 
 			boolean isCreatedStudents = statement.execute(createStudentsTable);
 //If getUpdateCount() shows 0 then it is DDL statement as per my guess
-		
-			System.out.println(statement.getUpdateCount()==0?"DDL statement":"DML mutation statements");
-			System.out.println(!isCreatedCollege?"yes students is created":"no");
-			System.out.println(!isCreatedStudents?"yes colleges is created":"no");
 
+			System.out.println(statement.getUpdateCount() == 0 ? "DDL statement" : "DML mutation statements");
+			System.out.println(!isCreatedCollege ? "yes students is created" : "no");
+			System.out.println(!isCreatedStudents ? "yes colleges is created" : "no");
 
 		} catch (SQLException e) {
 
