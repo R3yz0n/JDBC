@@ -44,7 +44,7 @@ public class Updatable {
 
 			resultSet.updateString("first_name", "heyboi");
 			resultSet.updateRow();
-//			resultSet.refreshRow(); //I gotta ask question
+			resultSet.refreshRow(); //I gotta ask question
 //			Thread.sleep(1000);
 			System.out.println(resultSet.getObject("first_name"));
 			System.out.println("sucessfull updated the first row with first_name heyboi");
